@@ -4,16 +4,15 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.appreciated.apexcharts.config.*;
+import com.github.appreciated.apexcharts.config.events.*;
 import com.github.appreciated.apexcharts.helper.Series;
-import com.vaadin.flow.component.HasSize;
-import com.vaadin.flow.component.HasStyle;
-import com.vaadin.flow.component.HasTheme;
-import com.vaadin.flow.component.Tag;
+import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dependency.NpmPackage;
 import com.vaadin.flow.component.littemplate.LitTemplate;
 import com.vaadin.flow.component.page.PendingJavaScriptResult;
+import com.vaadin.flow.shared.Registration;
 
 import java.util.Arrays;
 import java.util.List;
@@ -262,5 +261,60 @@ public class ApexCharts extends LitTemplate implements HasSize, HasStyle, HasThe
     public void resetSeries(Boolean shouldUpdateChart, Boolean shouldResetZoom) {
         getElement().callJsFunction("resetSeries", shouldUpdateChart, shouldResetZoom);
     }
-
+    
+    public Registration addClickListener(ComponentEventListener<ApexChartClickEvent<ApexCharts>> listener) {
+        return addListener(ApexChartClickEvent.class, (ComponentEventListener) listener);
+    }
+    
+    public Registration addAnimationEndListener(ComponentEventListener<ApexChartAnimationEndEvent<ApexCharts>> listener) {
+        return addListener(ApexChartAnimationEndEvent.class, (ComponentEventListener) listener);
+    }
+    
+    public Registration addBeforeMountListener(ComponentEventListener<ApexChartBeforeMountEvent<ApexCharts>> listener) {
+        return addListener(ApexChartBeforeMountEvent.class, (ComponentEventListener) listener);
+    }
+    
+    public Registration addMountedListener(ComponentEventListener<ApexChartMountedEvent<ApexCharts>> listener) {
+        return addListener(ApexChartMountedEvent.class, (ComponentEventListener) listener);
+    }
+    
+    public Registration addUpdatedListener(ComponentEventListener<ApexChartUpdatedEvent<ApexCharts>> listener) {
+        return addListener(ApexChartUpdatedEvent.class, (ComponentEventListener) listener);
+    }
+    
+    public Registration addLegendClickListener(ComponentEventListener<ApexChartLegendClickEvent<ApexCharts>> listener) {
+        return addListener(ApexChartLegendClickEvent.class, (ComponentEventListener) listener);
+    }
+    
+    public Registration addMouseMoveListener(ComponentEventListener<ApexChartMouseMoveEvent<ApexCharts>> listener) {
+        return addListener(ApexChartMouseMoveEvent.class, (ComponentEventListener) listener);
+    }
+    
+    public Registration addMarkerClickListener(ComponentEventListener<ApexChartMarkerClickEvent<ApexCharts>> listener) {
+        return addListener(ApexChartMarkerClickEvent.class, (ComponentEventListener) listener);
+    }
+    
+    public Registration addSelectionListener(ComponentEventListener<ApexChartSelectionEvent<ApexCharts>> listener) {
+        return addListener(ApexChartSelectionEvent.class, (ComponentEventListener) listener);
+    }
+    
+    public Registration addDataPointSelectionListener(ComponentEventListener<ApexChartDataPointSelectionEvent<ApexCharts>> listener) {
+        return addListener(ApexChartDataPointSelectionEvent.class, (ComponentEventListener) listener);
+    }
+    
+    public Registration addDataPointMouseEnterListener(ComponentEventListener<ApexChartDataPointMouseEnterEvent<ApexCharts>> listener) {
+        return addListener(ApexChartDataPointMouseEnterEvent.class, (ComponentEventListener) listener);
+    }
+    
+    public Registration addDataPointMouseLeaveListener(ComponentEventListener<ApexChartDataPointMouseLeaveEvent<ApexCharts>> listener) {
+        return addListener(ApexChartDataPointMouseLeaveEvent.class, (ComponentEventListener) listener);
+    }
+    
+    public Registration addZoomedListener(ComponentEventListener<ApexChartZoomedEvent<ApexCharts>> listener) {
+        return addListener(ApexChartZoomedEvent.class, (ComponentEventListener) listener);
+    }
+    
+    public Registration addScrolledListener(ComponentEventListener<ApexChartScrolledEvent<ApexCharts>> listener) {
+        return addListener(ApexChartScrolledEvent.class, (ComponentEventListener) listener);
+    }
 }

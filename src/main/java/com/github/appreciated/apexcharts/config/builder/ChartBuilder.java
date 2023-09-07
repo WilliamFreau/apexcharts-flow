@@ -89,7 +89,13 @@ public class ChartBuilder {
         this.sparkline = sparkline;
         return this;
     }
-
+    
+    /**
+     * Event is moved to ApexChart.add...Listener
+     * @param events
+     * @return
+     */
+    @Deprecated
     public ChartBuilder withEvents(Events events) {
         this.events = events;
         return this;

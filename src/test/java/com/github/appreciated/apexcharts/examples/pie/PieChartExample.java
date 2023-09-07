@@ -5,13 +5,14 @@ import com.github.appreciated.apexcharts.config.builder.ChartBuilder;
 import com.github.appreciated.apexcharts.config.builder.LegendBuilder;
 import com.github.appreciated.apexcharts.config.builder.ResponsiveBuilder;
 import com.github.appreciated.apexcharts.config.chart.Type;
+import com.github.appreciated.apexcharts.config.chart.builder.EventsBuilder;
 import com.github.appreciated.apexcharts.config.legend.Position;
 import com.github.appreciated.apexcharts.config.responsive.builder.OptionsBuilder;
 
 public class PieChartExample extends ApexChartsBuilder {
 
     public PieChartExample() {
-        withChart(ChartBuilder.get().withType(Type.PIE).build())
+        withChart(ChartBuilder.get().withEvents(EventsBuilder.get().withClick("onClick").build()).withType(Type.PIE).build())
                 .withLabels("Team A", "Team B", "Team C", "Team D", "Team E")
                 .withLegend(LegendBuilder.get()
                         .withPosition(Position.RIGHT)

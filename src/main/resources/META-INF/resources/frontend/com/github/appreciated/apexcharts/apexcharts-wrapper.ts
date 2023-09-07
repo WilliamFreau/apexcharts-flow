@@ -44,8 +44,10 @@ export class ApexChartsWrapper extends LitElement {
 
     render() {
         return html`
-            <style include="apex-charts-style"></style>
-            <slot></slot>
+            <div id="chart">
+                <style include="apex-charts-style"></style>
+                <slot></slot>
+            </div>
         `;
     }
 
@@ -167,55 +169,23 @@ export class ApexChartsWrapper extends LitElement {
         }
         if (this.chart) {
             this.config.chart = JSON.parse(this.chart);
-            if (this.config.chart && this.config.chart.events) {
-                if (this.config.chart.events.animationEnd) {
-                    this.config.chart.events.animationEnd = this.evalFunction(this.config.chart.events.animationEnd);
-                }
-                if (this.config.chart.events.beforeMount) {
-                    this.config.chart.events.beforeMount = this.evalFunction(this.config.chart.events.beforeMount);
-                }
-                if (this.config.chart.events.mounted) {
-                    this.config.chart.events.mounted = this.evalFunction(this.config.chart.events.mounted);
-                }
-                if (this.config.chart.events.updated) {
-                    this.config.chart.events.updated = this.evalFunction(this.config.chart.events.updated);
-                }
-                if (this.config.chart.events.click) {
-                    this.config.chart.events.click = this.evalFunction(this.config.chart.events.click);
-                }
-                if (this.config.chart.events.mouseMove) {
-                    this.config.chart.events.mouseMove = this.evalFunction(this.config.chart.events.mouseMove);
-                }
-                if (this.config.chart.events.legendClick) {
-                    this.config.chart.events.legendClick = this.evalFunction(this.config.chart.events.legendClick);
-                }
-                if (this.config.chart.events.markerClick) {
-                    this.config.chart.events.markerClick = this.evalFunction(this.config.chart.events.markerClick);
-                }
-                if (this.config.chart.events.selection) {
-                    this.config.chart.events.selection = this.evalFunction(this.config.chart.events.selection);
-                }
-                if (this.config.chart.events.dataPointSelection) {
-                    this.config.chart.events.dataPointSelection = this.evalFunction(this.config.chart.events.dataPointSelection);
-                }
-                if (this.config.chart.events.dataPointMouseEnter) {
-                    this.config.chart.events.dataPointMouseEnter = this.evalFunction(this.config.chart.events.dataPointMouseEnter);
-                }
-                if (this.config.chart.events.dataPointMouseLeave) {
-                    this.config.chart.events.dataPointMouseLeave = this.evalFunction(this.config.chart.events.dataPointMouseLeave);
-                }
-                if (this.config.chart.events.beforeZoom) {
-                    this.config.chart.events.beforeZoom = this.evalFunction(this.config.chart.events.beforeZoom);
-                }
-                if (this.config.chart.events.beforeResetZoom) {
-                    this.config.chart.events.beforeResetZoom = this.evalFunction(this.config.chart.events.beforeResetZoom);
-                }
-                if (this.config.chart.events.zoomed) {
-                    this.config.chart.events.zoomed = this.evalFunction(this.config.chart.events.zoomed);
-                }
-                if (this.config.chart.events.scrolled) {
-                    this.config.chart.events.scrolled = this.evalFunction(this.config.chart.events.scrolled);
-                }
+            if (this.config.chart) {
+                    this.config.chart.events = [];
+                    this.config.chart.events.animationEnd = this.onAnimationEnd;
+                    this.config.chart.events.beforeMount = this.onBeforeMount;
+                    this.config.chart.events.mounted = this.onMounted;
+                    this.config.chart.events.updated = this.onUpdated;
+                    this.config.chart.events.click = this.onClick;
+                    this.config.chart.events.mouseMove = this.onMouseMove;
+                    this.config.chart.events.legendClick = this.onLegendClick;
+                    this.config.chart.events.markerClick = this.onMarkerClick;
+                    this.config.chart.events.selection = this.onSelection;
+                    this.config.chart.events.dataPointSelection = this.onDataPointSelection;
+                    this.config.chart.events.dataPointMouseEnter = this.onDataPointMouseEnter;
+                    this.config.chart.events.dataPointMouseLeave = this.onDataPointMouseLeave;
+                    this.config.chart.events.zoomed = this.onZoomed;
+                    this.config.chart.events.scrolled = this.onScrolled;
+
             }
         }
         if (this.series) {
@@ -431,6 +401,134 @@ export class ApexChartsWrapper extends LitElement {
             this.updateConfig();
             return this.chartComponent.resetSeries(shouldUpdateChart, shouldResetZoom);
         }
+    }
+
+
+    onClick(event, chartContext, config) {
+        var toDispatch = new Event("apex-chart-click-event");
+
+        console.log(`Click event: Event: ${event} - ChartContext: ${chartContext} - Config: ${config}`);
+        console.log(`Generated Vaadin event: ${toDispatch}`);
+
+        chartContext.el.parentNode.dispatchEvent(toDispatch);
+    }
+
+    onAnimationEnd (chartContext, options) {
+        var toDispatch = new Event("apex-chart-animation-end-event");
+
+        console.log(`AnimationEnd event: ChartContext: ${chartContext} - Options: ${options}`);
+        console.log(`Generated Vaadin event: ${toDispatch}`);
+
+        chartContext.el.parentNode.dispatchEvent(toDispatch);
+    }
+
+    onBeforeMount (chartContext, config) {
+        var toDispatch = new Event("apex-chart-before-mount-event");
+
+        console.log(`BeforeMount event: ChartContext: ${chartContext} - Config: ${config}`);
+        console.log(`Generated Vaadin event: ${toDispatch}`);
+
+        chartContext.el.parentNode.dispatchEvent(toDispatch);
+    }
+
+    onMounted (chartContext, config) {
+        var toDispatch = new Event("apex-chart-mounted-event");
+
+        console.log(`Mounted event: ChartContext: ${chartContext} - Config: ${config}`);
+        console.log(`Generated Vaadin event: ${toDispatch}`);
+
+        chartContext.el.parentNode.dispatchEvent(toDispatch);
+    }
+
+    onUpdated (chartContext, config) {
+        var toDispatch = new Event("apex-chart-updated-event");
+
+        console.log(`Updated event: ChartContext: ${chartContext} - Config: ${config}`);
+        console.log(`Generated Vaadin event: ${toDispatch}`);
+
+        chartContext.el.parentNode.dispatchEvent(toDispatch);
+    }
+
+    onMouseMove(event, chartContext, config) {
+        var toDispatch = new Event("apex-chart-mouse-move-event");
+
+        console.log(`MouseMove event: Event: ${event} - ChartContext: ${chartContext} - Config: ${config}`);
+        console.log(`Generated Vaadin event: ${toDispatch}`);
+
+        chartContext.el.parentNode.dispatchEvent(toDispatch);
+    }
+
+    onLegendClick(event, chartContext, config) {
+        var toDispatch = new Event("apex-chart-legend-click-event");
+
+        console.log(`LegendClick event: Event: ${event} - ChartContext: ${chartContext} - Config: ${config}`);
+        console.log(`Generated Vaadin event: ${toDispatch}`);
+
+        chartContext.el.parentNode.dispatchEvent(toDispatch);
+    }
+
+    onMarkerClick(event, chartContext, {seriesIndex, dataPointIndex, config}) {
+        var toDispatch = new Event("apex-chart-marker-click-event");
+
+        console.log(`MarkerClick event: Event: ${event} - ChartContext: ${chartContext} - SeriesIndex: ${seriesIndex} - DataPointIndex: ${dataPointIndex} - Config: ${config}`);
+        console.log(`Generated Vaadin event: ${toDispatch}`);
+
+        chartContext.el.parentNode.dispatchEvent(toDispatch);
+    }
+
+    onSelection (chartContext, { xaxis, yaxis }) {
+        var toDispatch = new Event("apex-chart-selection-event");
+
+        console.log(`Selection event: Event: ${event} - ChartContext: ${chartContext} - XAxis: ${xaxis} - YAxis: ${yaxis}`);
+        console.log(`Generated Vaadin event: ${toDispatch}`);
+
+        chartContext.el.parentNode.dispatchEvent(toDispatch);
+    }
+
+    onDataPointSelection (chartContext, { xaxis, yaxis }) {
+        var toDispatch = new Event("apex-chart-data-point-selection-event");
+
+        console.log(`DataPointSelection event: Event: ${event} - ChartContext: ${chartContext} - XAxis: ${xaxis} - YAxis: ${yaxis}`);
+        console.log(`Generated Vaadin event: ${toDispatch}`);
+
+        //FIXME Find the apexchart dom element from here?
+        //chartContext.el.parentNode.dispatchEvent(toDispatch);
+    }
+
+    onDataPointMouseEnter(event, chartContext, config) {
+        var toDispatch = new Event("apex-chart-data-point-mouse-enter-event");
+
+        console.log(`DataPointMouseEnter event: Event: ${event} - ChartContext: ${chartContext} - Config: ${config}`);
+        console.log(`Generated Vaadin event: ${toDispatch}`);
+
+        chartContext.el.parentNode.dispatchEvent(toDispatch);
+    }
+
+    onDataPointMouseLeave(event, chartContext, config) {
+        var toDispatch = new Event("apex-chart-data-point-mouse-leave-event");
+
+        console.log(`DataPointMouseLeave event: Event: ${event} - ChartContext: ${chartContext} - Config: ${config}`);
+        console.log(`Generated Vaadin event: ${toDispatch}`);
+
+        chartContext.el.parentNode.dispatchEvent(toDispatch);
+    }
+
+    onZoomed(chartContext, { xaxis, yaxis }) {
+        var toDispatch = new Event("apex-chart-zoomed-event");
+
+        console.log(`Zoomed event: ChartContext: ${chartContext} - XAxis: ${xaxis} - YAxis: ${yaxis}`);
+        console.log(`Generated Vaadin event: ${toDispatch}`);
+
+        chartContext.el.parentNode.dispatchEvent(toDispatch);
+    }
+
+    onScrolled(chartContext, { xaxis }) {
+        var toDispatch = new Event("apex-chart-scrolled-event");
+
+        console.log(`Scrolled event: ChartContext: ${chartContext} - XAxis: ${xaxis}`);
+        console.log(`Generated Vaadin event: ${toDispatch}`);
+
+        chartContext.el.parentNode.dispatchEvent(toDispatch);
     }
 
 }

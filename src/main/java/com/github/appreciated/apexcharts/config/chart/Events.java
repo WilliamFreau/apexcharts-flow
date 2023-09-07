@@ -1,5 +1,9 @@
 package com.github.appreciated.apexcharts.config.chart;
 
+/**
+ * Event is moved to ApexChart.add...Listener
+ */
+@Deprecated
 public class Events {
     String animationEnd;
     String beforeMount;
